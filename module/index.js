@@ -1,37 +1,57 @@
 const cfenv = require('cfenv');
 const request = require('request');
 
-exports = function(sDestinationName, sServiceInstance, fnCallback) {
-   const dest_service = cfenv.getAppEnv().getService(sServiceInstance);
-   const sUaaCredentials = dest_service.credentials.clientid + ':' + dest_service.credentials.clientsecret;
+//TODO: documentar função
 
-   const post_options = {
-       url: dest_service.credentials.url + '/oauth/token',
-       method: 'POST',
-       headers: {
-           'Authorization': 'Basic ' + Buffer.from(sUaaCredentials).toString('base64'),
-           'Content-type': 'application/x-www-form-urlencoded'
-       },
-       form: {
-           'client_id': dest_service.credentials.clientid,
-           'grant_type': 'client_credentials'
-       }
-   }
+/**
+ * @param {Map} oOptions - configuration for CloudFoundry destination service instance
+ * @param {string} oOptions.url - the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
+ * @param {string} oOptions.destinationInstance - name of the instance of the destination service
+ * @param {string} oOptions.destinationName - name of the destination to use
+ */
 
-   request(post_options, (err, res, data) => {
+exports = function(oOptions) {
+   const oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
+   const sCredentials = `${oDestinationService.credentials.clientid}:${oDestinationService.credentials.clientsecret}`;
+
+   //TODO: usar promise
+   //TODO: handle errors
+   request({
+        url: `${oDestinationService.credentials.url}/oauth/token`,
+        method: 'POST',
+        headers: {
+            'Authorization': `Basic  ${Buffer.from(sCredentials).toString('base64')}`,
+            'Content-type': 'application/x-www-form-urlencoded'
+        },
+        form: {
+            'client_id': oDestinationService.credentials.clientid,
+            'grant_type': 'client_credentials'
+        }
+    }, (err, res, data) => {
        if (res.statusCode === 200) {
-           const token = JSON.parse(data).access_token;
-           const get_options = {
-               url: dest_service.credentials.uri + '/destination-configuration/v1/destinations/' + sDestinationName,
-               headers: {
-                   'Authorization': 'Bearer ' + token
-               }
-           }
+           const oToken = JSON.parse(data).access_token;
 
-           request(get_options, (err, res, data) => {
+           request({
+                url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${oOptions.destinationName}`,
+                headers: {
+                    'Authorization': `Bearer ${oToken}`
+                }
+            }, (err, res, data) => {
                const oDestination = JSON.parse(data);
-               const sURL = oDestination.destinationConfiguration.URL;
-               fnCallback(sURL)
+                //TODO: call destination using options
+                const options = {
+                    method: 'GET',
+                    url: oDestination.destinationConfiguration.URL + sEndpoint
+                };
+
+                if (oDestination.hasOwnProperty('authTokens')) {
+                    const token = oDestination.authTokens[0];
+                    options.headers = {
+                        'Authorization': `${token.type} ${token.value}`
+                    };
+                }
+
+               //TODO: return promise with response from destination
            });
        }
    });
