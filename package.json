@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/diegodossantos95/consume-destination-scp-cf/issues"
   },
-  "homepage": "https://github.com/diegodossantos95/consume-destination-scp-cf#readme"
+  "homepage": "https://github.com/diegodossantos95/consume-destination-scp-cf#readme",
+  "dependencies": {
+    "cfenv": "^1.1.0"
+  }
 }
