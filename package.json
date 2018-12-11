@@ -1,14 +1,14 @@
 {
-  "name": "get-destination-scp-cf",
+  "name": "consume-destination-scp-cf",
   "version": "0.0.1",
   "description": "NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack",
-  "main": "index.js",
+  "main": "module/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/diegodossantos95/get-destination-scp-cf.git"
+    "url": "git+https://github.com/diegodossantos95/consume-destination-scp-cf.git"
   },
   "keywords": [
     "sap",
@@ -20,7 +20,7 @@
   "author": "Diego dos Santos",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/diegodossantos95/get-destination-scp-cf/issues"
+    "url": "https://github.com/diegodossantos95/consume-destination-scp-cf/issues"
   },
-  "homepage": "https://github.com/diegodossantos95/get-destination-scp-cf#readme"
+  "homepage": "https://github.com/diegodossantos95/consume-destination-scp-cf#readme"
 }
