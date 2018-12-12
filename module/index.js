@@ -6,24 +6,59 @@ const request = require('request');
  * @param {string} oOptions.url - the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
  * @param {string} oOptions.destinationInstance - name of the instance of the destination service
  * @param {string} oOptions.destinationName - name of the destination to use
- * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oOptions.httpMethod - HTTP method to use
+ * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oOptions.httpMethod - HTTP method to use on Destination
+ * @param {object} [oOptions.payload] - payload for POST, PUT or PATCH
+ * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function doItNow(oOptions) {
-    getToken(oOptions.destinationInstance).then(sToken => {
+    //TODO: validate oOptions attributes
+    return getToken(oOptions.destinationInstance)
+    .then(sToken => {
         return getDestination(sToken, oOptions.destinationName);
-    }).then(oDestination => {
-        //TODO: return promise with response from destination
-        const oOptions = {
-            method: oOptions.httpMethod,
-            url: `${oDestination.destinationConfiguration.URL}${oOptions.url}`
+    })
+    .then(oDestination => {
+        let oParameters = {
+            url: oOptions.url,
+            destination: oDestination,
+            httpMethod: oOptions.httpMethod,
+            payload: oOptions.payload
         };
+        return callDestination(oParameters);
+    });
+}
 
-        if (oDestination.hasOwnProperty('authTokens')) {
-            const oToken = oDestination.authTokens[0];
-            oOptions.headers = {
-                'Authorization': `${oToken.type} ${oToken.value}`
-            };
-        }
+/**
+ * call the url in a destination 
+ * @param {Map} oParameters - parameters to configure the call
+ * @param {string} oParameters.url - the absolute path (e.g. /my/api) to call in the destination
+ * @param {object} oParameters.destination - destination object
+ * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oParameters.httpMethod
+ * @param {object} [oParameters.payload] - payload for POST, PUT or PATCH
+ * @returns {Promise.<Any>} - Promise object represents the destination call
+ */
+async function callDestination(oParameters) {
+    let oDestination = oParameters.destination;
+    let oOptions = {
+        method: oParameters.httpMethod,
+        url: `${oDestination.destinationConfiguration.URL}${oParameters.url}`,
+        payload: oParameters.payload
+    };
+
+    if (oDestination.hasOwnProperty('authTokens')) {
+        let oToken = oDestination.authTokens[0];
+        oOptions.headers = {
+            'Authorization': `${oToken.type} ${oToken.value}`
+        };
+    }
+
+    return new Promise((resolve, reject) => {
+        request(oOptions, (error, response, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+        });
     });
 }
 
@@ -35,7 +70,7 @@ async function doItNow(oOptions) {
  */
 async function getDestination(sToken, sDestinationName) {
     return new Promise((resolve, reject) => {
-        const oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
+        let oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
 
         request({
             url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${sDestinationName}`,
@@ -63,8 +98,8 @@ async function getDestination(sToken, sDestinationName) {
  */
 async function getToken(sDestinationInstance) {
     return new Promise((resolve, reject) => {
-        const oDestinationService = cfenv.getAppEnv().getService(sDestinationInstance);
-        const sCredentials = `${oDestinationService.credentials.clientid}:${oDestinationService.credentials.clientsecret}`;
+        let oDestinationService = cfenv.getAppEnv().getService(sDestinationInstance);
+        let sCredentials = `${oDestinationService.credentials.clientid}:${oDestinationService.credentials.clientsecret}`;
 
         request({
             url: `${oDestinationService.credentials.url}/oauth/token`,
@@ -81,7 +116,7 @@ async function getToken(sDestinationInstance) {
             if (error) {
                 reject(error);
             } else if (response.statusCode == 200) {
-                const sToken = JSON.parse(data).access_token;
+                let sToken = JSON.parse(data).access_token;
                 resolve(sToken);
             } else {
                 //TODO: handle error
