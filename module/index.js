@@ -9,32 +9,51 @@ const request = require('request');
  * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oOptions.httpMethod - HTTP method to use
  */
 async function doItNow(oOptions) {
-   const oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
+    getToken(oOptions.destinationInstance).then(sToken => {
+        return getDestination(sToken, oOptions.destinationName);
+    }).then(oDestination => {
+        //TODO: return promise with response from destination
+        const oOptions = {
+            method: oOptions.httpMethod,
+            url: `${oDestination.destinationConfiguration.URL}${oOptions.url}`
+        };
 
-   //TODO: usar promise
-   //TODO: handle errors
-   getToken(oOptions.destinationInstance).then(sToken => {
+        if (oDestination.hasOwnProperty('authTokens')) {
+            const oToken = oDestination.authTokens[0];
+            oOptions.headers = {
+                'Authorization': `${oToken.type} ${oToken.value}`
+            };
+        }
+    });
+}
+
+/**
+ * get the destination from destination service 
+ * @param {string} sToken - JWT token to access the destination service
+ * @param {string} sDestinationName - destination name
+ * @returns {Promise.<Any>} - Promise object represents the destination
+ */
+async function getDestination(sToken, sDestinationName) {
+    return new Promise((resolve, reject) => {
+        const oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
+
         request({
-            url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${oOptions.destinationName}`,
+            url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${sDestinationName}`,
             headers: {
                 'Authorization': `Bearer ${sToken}`
             }
-        }, (err, res, data) => {
-            const oDestination = JSON.parse(data);
-            const options = {
-                method: oOptions.httpMethod,
-                url: oDestination.destinationConfiguration.URL + sEndpoint
-            };
-
-            if (oDestination.hasOwnProperty('authTokens')) {
-                const token = oDestination.authTokens[0];
-                options.headers = {
-                    'Authorization': `${token.type} ${token.value}`
-                };
+        }, (error, response, data) => {
+            if (error) {
+                reject(error);
+            } else if (response.statusCode == 200) {
+                resolve(JSON.parse(data));
+            } else {
+                //TODO: handle error
+                console.error("Something bad happened on getDestination");
+                reject();
             }
-            //TODO: return promise with response from destination
         });
-   });
+    });
 }
 
 /**
@@ -66,6 +85,8 @@ async function getToken(sDestinationInstance) {
                 resolve(sToken);
             } else {
                 //TODO: handle error
+                console.error("Something bad happened on getToken");
+                reject();
             }
         });
     });
