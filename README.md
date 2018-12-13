@@ -3,7 +3,7 @@ NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foun
 
 ## TODO
 - [ ] Guide: prerequisites, usage, limitations...
-- [ ] Publish on npmjs
+- [ ] Publish on npmjs 
 - [ ] Validate parameters (URL, http method, payload as optional...)
 - [ ] Better error handling 
 - [ ] Unit testing
