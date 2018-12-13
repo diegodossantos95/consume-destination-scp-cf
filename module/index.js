@@ -14,7 +14,7 @@ async function doItNow(oOptions) {
     //TODO: validate oOptions attributes
     return getToken(oOptions.destinationInstance)
     .then(sToken => {
-        return getDestination(sToken, oOptions.destinationName);
+        return getDestination(sToken, oOptions.destinationInstance, oOptions.destinationName);
     })
     .then(oDestination => {
         let oParameters = {
@@ -68,9 +68,9 @@ async function callDestination(oParameters) {
  * @param {string} sDestinationName - destination name
  * @returns {Promise.<Any>} - Promise object represents the destination
  */
-async function getDestination(sToken, sDestinationName) {
+async function getDestination(sToken, sDestinationInstance, sDestinationName) {
     return new Promise((resolve, reject) => {
-        let oDestinationService = cfenv.getAppEnv().getService(oOptions.destinationInstance);
+        let oDestinationService = cfenv.getAppEnv().getService(sDestinationInstance);
 
         request({
             url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${sDestinationName}`,
