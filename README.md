@@ -1,13 +1,6 @@
 # consume-destination-scp-cf
 NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack
 
-## TODO
-- [ ] Publish on npmjs 
-- [ ] Validate parameters (URL, http method, payload as optional...)
-- [ ] Better error handling 
-- [ ] Unit testing
-- [ ] Travis CI
-
 ## Install
 ~~~
 npm i consume-destination-scp-cf
@@ -26,7 +19,7 @@ npm i consume-destination-scp-cf
       - destination-instance
   ~~~  
   
-  ## Usage
+## Usage
 ~~~ js
 const consumeDestination = require('consume-destination-scp-cf');
 
