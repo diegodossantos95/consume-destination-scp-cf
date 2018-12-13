@@ -11,7 +11,6 @@ const request = require('request');
  * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function doItNow(oOptions) {
-    //TODO: validate oOptions attributes
     return getToken(oOptions.destinationInstance)
     .then(sToken => {
         return getDestination(sToken, oOptions.destinationInstance, oOptions.destinationName);
@@ -54,6 +53,7 @@ async function callDestination(oParameters) {
     return new Promise((resolve, reject) => {
         request(oOptions, (error, response, data) => {
             if (error) {
+                console.error(error);
                 reject(error);
             } else {
                 resolve(data);
@@ -79,11 +79,11 @@ async function getDestination(sToken, sDestinationInstance, sDestinationName) {
             }
         }, (error, response, data) => {
             if (error) {
+                console.error(error);
                 reject(error);
             } else if (response.statusCode == 200) {
                 resolve(JSON.parse(data));
             } else {
-                //TODO: handle error
                 console.error("Something bad happened on getDestination");
                 reject();
             }
@@ -114,12 +114,12 @@ async function getToken(sDestinationInstance) {
             }
         }, (error, response, data) => {
             if (error) {
+                console.error(error);
                 reject(error);
             } else if (response.statusCode == 200) {
                 let sToken = JSON.parse(data).access_token;
                 resolve(sToken);
             } else {
-                //TODO: handle error
                 console.error("Something bad happened on getToken");
                 reject();
             }
