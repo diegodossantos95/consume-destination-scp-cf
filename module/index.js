@@ -73,7 +73,6 @@ async function callDestination(oParameters) {
     return new Promise((resolve, reject) => {
         request(oOptions, (error, response, data) => {
             if (error) {
-                console.error(error);
                 reject(error);
             } else {
                 resolve(data);
@@ -108,13 +107,11 @@ async function getDestination(sToken, sDestinationInstance, sDestinationName) {
             }
         }, (error, response, data) => {
             if (error) {
-                console.error(error);
                 reject(error);
             } else if (response.statusCode == 200) {
                 resolve(JSON.parse(data));
             } else {
-                console.error("Something bad happened on getDestination");
-                reject();
+                reject(`Server responded with status code ${response.statusCode} when requesting the destination from destination service`);
             }
         });
     });
@@ -143,14 +140,12 @@ async function getToken(sDestinationInstance) {
             }
         }, (error, response, data) => {
             if (error) {
-                console.error(error);
                 reject(error);
             } else if (response.statusCode == 200) {
                 let sToken = JSON.parse(data).access_token;
                 resolve(sToken);
             } else {
-                console.error("Something bad happened on getToken");
-                reject();
+                reject(`Server responded with status code ${response.statusCode} when requesting the JWT token`);
             }
         });
     });
