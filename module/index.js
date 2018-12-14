@@ -3,7 +3,7 @@ const request = require('request');
 
 /**
  * @param {Map} oOptions - configuration for CloudFoundry destination service instance
- * @param {string} oOptions.url - the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
+ * @param {string} [oOptions.url] - the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
  * @param {string} oOptions.destinationInstance - name of the instance of the destination service
  * @param {string} oOptions.destinationName - name of the destination to use
  * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oOptions.httpMethod - HTTP method to use on Destination
@@ -11,6 +11,7 @@ const request = require('request');
  * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function doItNow(oOptions) {
+    //TODO: validar destinationInstance, destinationName, httpmethod
     return getToken(oOptions.destinationInstance)
     .then(sToken => {
         return getDestination(sToken, oOptions.destinationInstance, oOptions.destinationName);
@@ -29,21 +30,26 @@ async function doItNow(oOptions) {
 /**
  * call the url in a destination 
  * @param {Map} oParameters - parameters to configure the call
- * @param {string} oParameters.url - the absolute path (e.g. /my/api) to call in the destination
+ * @param {string} [oParameters.url] - the absolute path (e.g. /my/api) to call in the destination
  * @param {object} oParameters.destination - destination object
  * @param {('GET'|'POST'|'PUT'|'PATCH'|'DELETE'|'HEAD'|'OPTIONS')} oParameters.httpMethod
  * @param {object} [oParameters.payload] - payload for POST, PUT or PATCH
  * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function callDestination(oParameters) {
+    //TODO: validar payload para post, put e patch
     let oDestination = oParameters.destination;
     let oOptions = {
         method: oParameters.httpMethod,
-        url: `${oDestination.destinationConfiguration.URL}${oParameters.url}`,
+        url: `${oDestination.destinationConfiguration.URL}`,
         payload: oParameters.payload
     };
 
-    if (oDestination.hasOwnProperty('authTokens')) {
+    if (typeof oParameters.url !== 'undefined') {
+        oOptions.url += oParameters.url;
+    }
+
+    if (typeof oDestination.authTokens !== 'undefined') {
         let oToken = oDestination.authTokens[0];
         oOptions.headers = {
             'Authorization': `${oToken.type} ${oToken.value}`
