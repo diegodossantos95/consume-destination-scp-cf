@@ -1,5 +1,6 @@
 const cfenv = require('cfenv');
 const request = require('request');
+const httpMethodsEnum = require('http-methods-enum');
 
 /**
  * @param {Map} oOptions - configuration for CloudFoundry destination service instance
@@ -37,23 +38,25 @@ async function doItNow(oOptions) {
  * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function callDestination(oParameters) {
-    //TODO: validar payload para post, put e patch
     let oDestination = oParameters.destination;
     let oOptions = {
         method: oParameters.httpMethod,
-        url: `${oDestination.destinationConfiguration.URL}`,
-        payload: oParameters.payload
+        url: `${oDestination.destinationConfiguration.URL}`
     };
 
-    if (typeof oParameters.url !== 'undefined') {
+    if (oParameters.url) {
         oOptions.url += oParameters.url;
     }
 
-    if (typeof oDestination.authTokens !== 'undefined') {
+    if (oDestination.authTokens && oDestination.authTokens[0]) {
         let oToken = oDestination.authTokens[0];
         oOptions.headers = {
             'Authorization': `${oToken.type} ${oToken.value}`
         };
+    }
+
+    if (oParameters.payload && isPostPutPatch(oParameters.httpMethod)) {
+        oOptions.payload = oParameters.payload
     }
 
     return new Promise((resolve, reject) => {
@@ -66,6 +69,15 @@ async function callDestination(oParameters) {
             }
         });
     });
+}
+
+/**
+ * check if the http method is POST, PUT or PATCH
+ * @param {string} sMethod - http method
+ * @returns {boolean}
+ */
+function isPostPutPatch(sMethod) {
+    return sMethod == httpMethodsEnum.POST || sMethod == httpMethodsEnum.PUT || sMethod == httpMethodsEnum.PATCH;
 }
 
 /**

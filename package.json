@@ -25,6 +25,7 @@
   "homepage": "https://github.com/diegodossantos95/consume-destination-scp-cf#readme",
   "dependencies": {
     "cfenv": "^1.1.0",
+    "http-methods-enum": "^0.1.1",
     "request": "^2.88.0"
   },
   "engines": {
