@@ -1,5 +1,4 @@
 ## TODO
-- [ ] Validate parameters (URL, http method, payload as optional...)
-- [ ] Better error handling 
+- [ ] Support to run locally
 - [ ] Unit testing
 - [ ] Travis CI

@@ -1,4 +1,6 @@
 # consume-destination-scp-cf
+[![npm Package](https://img.shields.io/npm/v/consume-destination-scp-cf.svg)](https://www.npmjs.com/package/consume-destination-scp-cf)
+
 NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack
 
 ## Install
@@ -43,11 +45,11 @@ consumeDestination({
 
 ## API
 ## consume-destination-scp-cf(options)
-- `url` = the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
+- `url` = optional, the url to call in the destination, absolute path (including leading slash) e.g. /api/v1/json
 - `destinationInstance` = name of the instance of the destination service
 - `destinationName` = name of the destination to use
 - `httpMethod` = HTTP method to use on Destination. Supported GET, POST, PUT, PATCH, DELETE, HEAD and OPTIONS.
-- `payload` = payload for POST, PUT or PATCH
+- `payload` = optional, payload for POST, PUT or PATCH
 
 ## License
 MIT
