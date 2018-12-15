@@ -52,7 +52,7 @@ consumeDestination({
 - `payload` = Optional, payload for POST, PUT or PATCH
 
 ## License
-MIT
+Apache-2.0
 
 ## References
 - Adaptation of [vobu/sap-cf-destination](https://github.com/vobu/sap-cf-destination) to consume destination without Connectivity and XSUAA services.
