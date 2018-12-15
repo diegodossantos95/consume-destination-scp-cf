@@ -12,16 +12,16 @@ const httpMethodsEnum = require('http-methods-enum');
  * @returns {Promise.<Any>} - Promise object represents the destination call
  */
 async function doItNow(oOptions) {
-    if (!httpMethodsEnum.hasOwnProperty(oOptions.httpMethod)) {
-        Promise.reject(`Unknown HTTP method: ${oOptions.httpMethod}. Allowed methods: ${JSON.stringify(httpMethodsEnum)}`);
-    }
+    if (!httpMethodsEnum.default.hasOwnProperty(oOptions.httpMethod)) {
+        throw Error(`Unknown HTTP method: ${oOptions.httpMethod}. Allowed methods: ${JSON.stringify(httpMethodsEnum)}`);
+    } 
 
     if (!oOptions.destinationInstance) {
-        Promise.reject('Invalid destination service instance');
+        throw Error('Invalid destination service instance');
     }
 
     if (!oOptions.destinationName) {
-        Promise.reject('Invalid destination name');
+        throw Error('Invalid destination name');
     }
 
     return getToken(oOptions.destinationInstance)
