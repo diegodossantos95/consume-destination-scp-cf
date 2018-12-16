@@ -10,7 +10,7 @@ npm i consume-destination-scp-cf
 
 ## Prerequisites
 - Destination service instance created
-- destination configured
+- Destination configured
 - All of the above instances bound to the node app, e.g. via `manifest.yml`:
   ~~~ yaml
   applications:
