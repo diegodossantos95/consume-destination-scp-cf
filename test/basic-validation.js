@@ -7,11 +7,11 @@ chai.should();
 
 describe('validate input options', () => {
     it('should throw when an unsupported http method is supplied', () => {
-            return consumeDestination({
-                httpMethod: 'BLA',
-                destinationInstance: 'instanceName',
-                destinationName: 'destinationName'
-            }).should.be.rejected;
+        return consumeDestination({
+            httpMethod: 'BLA',
+            destinationInstance: 'instanceName',
+            destinationName: 'destinationName'
+        }).should.be.rejected;
     });
 
     it('should throw when no destination instance is supplied', () => {
