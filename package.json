@@ -4,7 +4,7 @@
   "description": "NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack",
   "main": "module/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,11 @@
     "cfenv": "^1.1.0",
     "http-methods-enum": "^0.1.1",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1"
   },
   "engines": {
     "node": "7.6.0"
