@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.2...HEAD
+[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.3...HEAD
+
+## 0.0.3 - 2019-01-05
+- Added unit tests
+- Added travis configuration
 
 ## 0.0.2 - 2018-12-14
 - Added validation for mandatory parameters

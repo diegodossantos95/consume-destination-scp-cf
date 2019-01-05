@@ -1,6 +1,6 @@
 {
   "name": "consume-destination-scp-cf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack",
   "main": "module/index.js",
   "scripts": {
