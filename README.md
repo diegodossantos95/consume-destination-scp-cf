@@ -1,6 +1,6 @@
 # consume-destination-scp-cf
 [![npm Package](https://img.shields.io/npm/v/consume-destination-scp-cf.svg)](https://www.npmjs.com/package/consume-destination-scp-cf)
-[![Build Status](https://travis-ci.org/diegodossantos95/consume-destination-scp-cf.svg?branch=dev)](https://travis-ci.org/diegodossantos95/consume-destination-scp-cf)
+[![Build Status](https://travis-ci.org/diegodossantos95/consume-destination-scp-cf.svg?branch=master)](https://travis-ci.org/diegodossantos95/consume-destination-scp-cf)
 [![Generic badge](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 NodeJS Module for accessing destination details on SAP Cloud Platform Cloud Foundry stack
