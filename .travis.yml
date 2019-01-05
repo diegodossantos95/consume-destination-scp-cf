@@ -5,9 +5,7 @@ node_js:
   - "10"
   - "lts/*"
   - "node"
-cache:
-  directories:
-    - "node_modules"
+cache: npm
 branches:
   only:
     - master
