@@ -1,0 +1,20 @@
+{
+    "services": {
+        "destination": [
+            {
+                "instance_name": "destination-lite",
+                "binding_name": null,
+                "name": "destination-lite",
+                "label": "destination",
+                "plan": "lite",
+                "tags": [],
+                "credentials": {
+                    "clientid": "clientid",
+                    "clientsecret": "clientsecret",
+                    "url": "https://auth-url.com.br",
+                    "uri": "https://destination-url.com.br"
+                }
+            }
+        ]
+    }
+}

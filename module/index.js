@@ -98,7 +98,9 @@ function isPostPutPatch(sMethod) {
  */
 async function getDestination(sToken, sDestinationInstance, sDestinationName) {
     return new Promise((resolve, reject) => {
-        let oDestinationService = cfenv.getAppEnv().getService(sDestinationInstance);
+        let oDestinationService = cfenv.getAppEnv({
+            vcapFile: './module/cfenv.json'
+        }).getService(sDestinationInstance);
 
         request({
             url: `${oDestinationService.credentials.uri}/destination-configuration/v1/destinations/${sDestinationName}`,
@@ -124,7 +126,9 @@ async function getDestination(sToken, sDestinationInstance, sDestinationName) {
  */
 async function getToken(sDestinationInstance) {
     return new Promise((resolve, reject) => {
-        let oDestinationService = cfenv.getAppEnv().getService(sDestinationInstance);
+        let oDestinationService = cfenv.getAppEnv({
+            vcapFile: './module/cfenv.json'
+        }).getService(sDestinationInstance);
         let sCredentials = `${oDestinationService.credentials.clientid}:${oDestinationService.credentials.clientsecret}`;
 
         request({
