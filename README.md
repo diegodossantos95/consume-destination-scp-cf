@@ -32,7 +32,7 @@ consumeDestination({
         url: '/api/json',
         destinationInstance: 'my-destination-instance',
         destinationName: 'myDestination',
-        http_verb: 'POST',
+        httpMethod: 'POST',
         payload: {
             "me": "here"
         }
