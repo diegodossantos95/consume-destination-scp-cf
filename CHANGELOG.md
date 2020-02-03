@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.4...HEAD
+[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.5...HEAD
+
+## 0.0.5 - 2020-02-02
+- Updated npm dependencies
 
 ## 0.0.4 - 2019-02-15
 - Fixed usage on readme (Thanks [@IObert](https://github.com/IObert))
