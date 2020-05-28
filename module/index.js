@@ -14,7 +14,7 @@ const httpMethodsEnum = require('http-methods-enum');
 async function doItNow(oOptions) {
     if (!httpMethodsEnum.default.hasOwnProperty(oOptions.httpMethod)) {
         throw Error(`Unknown HTTP method: ${oOptions.httpMethod}. Allowed methods: ${JSON.stringify(httpMethodsEnum)}`);
-    } 
+    }
 
     if (!oOptions.destinationInstance) {
         throw Error('Invalid destination service instance');
@@ -40,7 +40,7 @@ async function doItNow(oOptions) {
 }
 
 /**
- * call the url in a destination 
+ * call the url in a destination
  * @param {Map} oParameters - parameters to configure the call
  * @param {string} [oParameters.url] - the absolute path (e.g. /my/api) to call in the destination
  * @param {object} oParameters.destination - destination object
@@ -91,7 +91,7 @@ function isPostPutPatch(sMethod) {
 }
 
 /**
- * get the destination from destination service 
+ * get the destination from destination service
  * @param {string} sToken - JWT token to access the destination service
  * @param {string} sDestinationName - destination name
  * @returns {Promise.<Any>} - Promise object represents the destination
@@ -120,7 +120,7 @@ async function getDestination(sToken, sDestinationInstance, sDestinationName) {
 }
 
 /**
- * get a JWT token to access the destination service 
+ * get a JWT token to access the destination service
  * @param {string} sDestinationInstance - destination service instance name
  * @returns {Promise.<string>} - Promise object represents the token
  */
@@ -135,7 +135,7 @@ async function getToken(sDestinationInstance) {
             url: `${oDestinationService.credentials.url}/oauth/token`,
             method: 'POST',
             headers: {
-                'Authorization': `Basic  ${Buffer.from(sCredentials).toString('base64')}`,
+                'Authorization': `Basic ${Buffer.from(sCredentials).toString('base64')}`,
                 'Content-type': 'application/x-www-form-urlencoded'
             },
             form: {
