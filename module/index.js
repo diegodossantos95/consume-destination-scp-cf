@@ -87,7 +87,7 @@ async function callDestination(oParameters) {
  * @returns {boolean}
  */
 function isPostPutPatch(sMethod) {
-    return sMethod == httpMethodsEnum.POST || sMethod == httpMethodsEnum.PUT || sMethod == httpMethodsEnum.PATCH;
+    return sMethod == httpMethodsEnum.default.POST || sMethod == httpMethodsEnum.default.PUT || sMethod == httpMethodsEnum.default.PATCH;
 }
 
 /**
