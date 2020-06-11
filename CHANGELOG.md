@@ -2,7 +2,11 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.6...HEAD
+[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.7...HEAD
+
+## 0.0.7 - 2020-06-11
+- Fixed request body parameter (Thanks [@marcosvega91](https://github.com/marcosvega91))
+- Fixed request method check function (Thanks [@marcosvega91](https://github.com/marcosvega91))
 
 ## 0.0.6 - 2020-05-28
 - Fixed authorization header (Thanks [@marcosvega91](https://github.com/marcosvega91))
