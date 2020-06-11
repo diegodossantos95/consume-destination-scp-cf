@@ -67,7 +67,7 @@ async function callDestination(oParameters) {
     }
 
     if (oParameters.payload && isPostPutPatch(oParameters.httpMethod)) {
-        oOptions.payload = oParameters.payload
+        oOptions.body = oParameters.payload
     }
 
     return new Promise((resolve, reject) => {
