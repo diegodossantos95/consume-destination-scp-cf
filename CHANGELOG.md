@@ -2,7 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
-[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.5...HEAD
+[Unreleased]: https://github.com/diegodossantos95/consume-destination-scp-cf/compare/0.0.6...HEAD
+
+## 0.0.6 - 2020-05-28
+- Fixed authorization header (Thanks [@marcosvega91](https://github.com/marcosvega91))
 
 ## 0.0.5 - 2020-02-02
 - Updated npm dependencies
