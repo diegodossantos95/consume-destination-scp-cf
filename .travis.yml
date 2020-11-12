@@ -8,5 +8,5 @@ node_js:
 cache: npm
 branches:
   only:
-    - master
+    - main
     - dev
